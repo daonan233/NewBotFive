@@ -1,0 +1,28 @@
+{
+  "enabled": {
+    "description": "启用联网搜索插件",
+    "type": "bool",
+    "default": true
+  },
+  "provider": {
+    "description": "搜索供应商",
+    "type": "string",
+    "options": ["tavily", "serper"],
+    "labels": ["Tavily", "Serper"],
+    "default": "tavily",
+    "hint": "API Key 从 SEARCH_API_KEY 环境变量读取。"
+  },
+  "max_results": {
+    "description": "单次最多返回结果数",
+    "type": "int",
+    "default": 5,
+    "slider": {"min": 1, "max": 10, "step": 1}
+  },
+  "timeout_seconds": {
+    "description": "搜索请求超时（秒）",
+    "type": "int",
+    "default": 15,
+    "slider": {"min": 5, "max": 60, "step": 1}
+  }
+}
+

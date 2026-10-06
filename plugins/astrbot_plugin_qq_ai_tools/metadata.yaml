@@ -1,0 +1,11 @@
+name: astrbot_plugin_qq_ai_tools
+display_name: QQ AI 通用工具
+short_desc: 安全计算器与免密钥实时天气 Tool。
+desc: 提供 /calc、/weather 及 calculator、get_weather LLM Tools。
+version: 0.6.0
+author: local
+repo: https://github.com/example/qq-ai-bot
+astrbot_version: ">=4.28,<5"
+support_platforms:
+  - aiocqhttp
+

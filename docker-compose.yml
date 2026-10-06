@@ -1,0 +1,132 @@
+name: qq-ai-bot
+
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE:-pgvector/pgvector:pg17}
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./deploy/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks: [bot_backend]
+
+  redis:
+    image: ${REDIS_IMAGE:-redis:7-alpine}
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    command:
+      - sh
+      - -ec
+      - exec redis-server --appendonly yes --requirepass "$${REDIS_PASSWORD}"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD}\" --no-auth-warning ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [bot_backend]
+
+  astrbot:
+    image: ${ASTRBOT_IMAGE:-soulter/astrbot:latest}
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_POOL_MIN_SIZE: ${POSTGRES_POOL_MIN_SIZE:-1}
+      POSTGRES_POOL_MAX_SIZE: ${POSTGRES_POOL_MAX_SIZE:-10}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      REDIS_DB: ${REDIS_DB:-0}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_POOL_MAX_CONNECTIONS: ${REDIS_POOL_MAX_CONNECTIONS:-20}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      DEFAULT_MODEL: ${DEFAULT_MODEL:-}
+      FAST_MODEL: ${FAST_MODEL:-}
+      SMART_MODEL: ${SMART_MODEL:-}
+      VISION_MODEL: ${VISION_MODEL:-}
+      CODING_MODEL: ${CODING_MODEL:-}
+      SUPER_USERS: ${SUPER_USERS:-}
+      SEARCH_PROVIDER: ${SEARCH_PROVIDER:-tavily}
+      SEARCH_API_KEY: ${SEARCH_API_KEY:-}
+      SEARCH_API_BASE: ${SEARCH_API_BASE:-}
+      SEARCH_RATE_LIMIT_PER_MINUTE: ${SEARCH_RATE_LIMIT_PER_MINUTE:-5}
+      IMAGE_API_BASE: ${IMAGE_API_BASE:-}
+      IMAGE_API_KEY: ${IMAGE_API_KEY:-}
+      IMAGE_MODEL: ${IMAGE_MODEL:-}
+      IMAGE_RATE_LIMIT_PER_MINUTE: ${IMAGE_RATE_LIMIT_PER_MINUTE:-2}
+      RANDOM_IMAGE_CONTAINER_DIR: /AstrBot/data/qq_ai_random_images
+    ports:
+      - "127.0.0.1:6185:6185"
+    volumes:
+      - astrbot_data:/AstrBot/data
+      - ./common/qq_ai_common:/AstrBot/qq_ai_common:ro
+      - ./plugins/astrbot_plugin_qq_ai_core:/AstrBot/data/plugins/astrbot_plugin_qq_ai_core:ro
+      - ./plugins/astrbot_plugin_qq_ai_fun:/AstrBot/data/plugins/astrbot_plugin_qq_ai_fun:ro
+      - ./plugins/astrbot_plugin_qq_ai_guard:/AstrBot/data/plugins/astrbot_plugin_qq_ai_guard:ro
+      - ./plugins/astrbot_plugin_qq_ai_group:/AstrBot/data/plugins/astrbot_plugin_qq_ai_group:ro
+      - ./plugins/astrbot_plugin_qq_ai_reminder:/AstrBot/data/plugins/astrbot_plugin_qq_ai_reminder:ro
+      - ./plugins/astrbot_plugin_qq_ai_search:/AstrBot/data/plugins/astrbot_plugin_qq_ai_search:ro
+      - ./plugins/astrbot_plugin_qq_ai_memory:/AstrBot/data/plugins/astrbot_plugin_qq_ai_memory:ro
+      - ./plugins/astrbot_plugin_qq_ai_media:/AstrBot/data/plugins/astrbot_plugin_qq_ai_media:ro
+      - ./plugins/astrbot_plugin_qq_ai_tools:/AstrBot/data/plugins/astrbot_plugin_qq_ai_tools:ro
+      - random_image_data:/AstrBot/data/qq_ai_random_images:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks: [bot_frontend, bot_backend]
+
+  napcat:
+    image: ${NAPCAT_IMAGE:-mlikiowa/napcat-docker:latest}
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      NAPCAT_UID: ${NAPCAT_UID:-1000}
+      NAPCAT_GID: ${NAPCAT_GID:-1000}
+      WEBUI_TOKEN: ${NAPCAT_WEBUI_TOKEN}
+      MODE: astrbot
+    ports:
+      - "127.0.0.1:6099:6099"
+    volumes:
+      # MODE=astrbot 按官方 Compose 约定与 AstrBot 共享数据卷。
+      - astrbot_data:/AstrBot/data
+      - napcat_config:/app/napcat/config
+      - napcat_qq:/app/.config/QQ
+      - random_image_data:/AstrBot/data/qq_ai_random_images:ro
+    depends_on:
+      - astrbot
+    networks: [bot_frontend]
+
+networks:
+  bot_frontend:
+  bot_backend:
+    internal: true
+
+volumes:
+  postgres_data:
+  redis_data:
+  astrbot_data:
+  random_image_data:
+  napcat_config:
+  napcat_qq:

@@ -1,0 +1,30 @@
+{
+  "enabled": {
+    "description": "启用群聊助手",
+    "type": "bool",
+    "default": true
+  },
+  "summary_default_messages": {
+    "description": "群总结默认读取消息数",
+    "type": "int",
+    "default": 100,
+    "slider": {"min": 10, "max": 300, "step": 10}
+  },
+  "summary_max_messages": {
+    "description": "群总结允许读取的最大消息数",
+    "type": "int",
+    "default": 300,
+    "slider": {"min": 20, "max": 1000, "step": 20}
+  },
+  "quote_admin_only_add": {
+    "description": "仅管理员可收录群友语录",
+    "type": "bool",
+    "default": false
+  },
+  "timezone": {
+    "description": "群统计时区",
+    "type": "string",
+    "default": "Asia/Shanghai"
+  }
+}
+

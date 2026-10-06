@@ -1,0 +1,10 @@
+name: astrbot_plugin_qq_ai_reminder
+display_name: QQ AI 持久化提醒
+short_desc: 可恢复、可重试的 PostgreSQL 持久提醒。
+desc: 支持命令与 LLM Tool 创建提醒，使用 PostgreSQL 持久化并在重启后恢复。
+version: 0.3.0
+author: local
+repo: https://github.com/example/qq-ai-bot
+astrbot_version: ">=4.28,<5"
+support_platforms:
+  - aiocqhttp

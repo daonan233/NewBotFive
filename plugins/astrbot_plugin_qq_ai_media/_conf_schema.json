@@ -1,0 +1,41 @@
+{
+  "enabled": {
+    "description": "启用图片理解与生图",
+    "type": "bool",
+    "default": true
+  },
+  "vision_model": {
+    "description": "图片理解模型 ID",
+    "type": "string",
+    "default": "",
+    "hint": "留空时读取 VISION_MODEL；仍为空则使用 AstrBot 当前模型。"
+  },
+  "image_model": {
+    "description": "图片生成模型 ID",
+    "type": "string",
+    "default": "",
+    "hint": "留空时读取 IMAGE_MODEL。"
+  },
+  "timeout_seconds": {
+    "description": "生图 API 超时（秒）",
+    "type": "int",
+    "default": 90,
+    "slider": {"min": 15, "max": 180, "step": 5}
+  },
+  "local_random_enabled": {
+    "description": "启用本地随机图片",
+    "type": "bool",
+    "default": true
+  },
+  "local_random_dir": {
+    "description": "本地随机图片的容器内目录",
+    "type": "string",
+    "default": "/AstrBot/data/qq_ai_random_images",
+    "hint": "这里填写容器路径；Windows 文件夹通过 RANDOM_IMAGE_HOST_DIR 挂载。"
+  },
+  "local_random_recursive": {
+    "description": "递归扫描子文件夹",
+    "type": "bool",
+    "default": true
+  }
+}

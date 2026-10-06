@@ -1,0 +1,11 @@
+name: astrbot_plugin_qq_ai_fun
+display_name: QQ AI 思考与抽奖
+short_desc: 按会话切换推理模型，并提供可持久化群抽奖小游戏。
+desc: 提供思考模式路由、群抽奖、骰子和随机选择功能。
+version: 0.1.0
+author: local
+repo: https://github.com/example/qq-ai-bot
+astrbot_version: ">=4.28,<5"
+support_platforms:
+  - aiocqhttp
+

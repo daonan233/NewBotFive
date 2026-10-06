@@ -1,0 +1,11 @@
+name: astrbot_plugin_qq_ai_memory
+display_name: QQ AI 长期记忆
+short_desc: 显式保存、查看、删除并注入用户长期记忆。
+desc: 使用 PostgreSQL 保存用户明确要求记住的内容，并在后续 LLM 请求中安全注入。
+version: 0.4.0
+author: local
+repo: https://github.com/example/qq-ai-bot
+astrbot_version: ">=4.28,<5"
+support_platforms:
+  - aiocqhttp
+

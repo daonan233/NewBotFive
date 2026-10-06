@@ -1,0 +1,20 @@
+{
+  "enabled": {
+    "description": "启用长期记忆",
+    "type": "bool",
+    "default": true
+  },
+  "max_memories_per_scope": {
+    "description": "每个用户在每个会话范围最多保存条数",
+    "type": "int",
+    "default": 50,
+    "slider": {"min": 5, "max": 200, "step": 5}
+  },
+  "inject_limit": {
+    "description": "每次对话最多注入的记忆条数",
+    "type": "int",
+    "default": 12,
+    "slider": {"min": 1, "max": 30, "step": 1}
+  }
+}
+

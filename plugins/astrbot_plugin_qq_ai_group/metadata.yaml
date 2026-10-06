@@ -1,0 +1,11 @@
+name: astrbot_plugin_qq_ai_group
+display_name: QQ AI 群聊助手
+short_desc: 群聊总结、活跃统计和群友语录。
+desc: 基于 PostgreSQL 中的群消息提供 /summary、/stats 和 /quote。
+version: 0.3.0
+author: local
+repo: https://github.com/example/qq-ai-bot
+astrbot_version: ">=4.28,<5"
+support_platforms:
+  - aiocqhttp
+

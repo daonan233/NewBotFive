@@ -1,0 +1,42 @@
+{
+  "enabled": {
+    "description": "启用稳定性守卫",
+    "type": "bool",
+    "default": true
+  },
+  "store_messages": {
+    "description": "将收到的消息保存到 PostgreSQL",
+    "type": "bool",
+    "default": true
+  },
+  "deduplicate_messages": {
+    "description": "使用 Redis 拦截重复 OneBot 消息",
+    "type": "bool",
+    "default": true
+  },
+  "dedup_ttl_seconds": {
+    "description": "消息去重记录保留秒数",
+    "type": "int",
+    "default": 86400,
+    "slider": {"min": 60, "max": 604800, "step": 60}
+  },
+  "ai_rate_limit_per_minute": {
+    "description": "普通用户每分钟最多 AI 请求数",
+    "type": "int",
+    "default": 10,
+    "slider": {"min": 1, "max": 60, "step": 1},
+    "hint": "环境变量 AI_RATE_LIMIT_PER_MINUTE 可提供默认值；超级管理员不受限制。"
+  },
+  "message_max_chars": {
+    "description": "单条消息最大入库字符数",
+    "type": "int",
+    "default": 4000,
+    "slider": {"min": 200, "max": 20000, "step": 100}
+  },
+  "timezone": {
+    "description": "用量统计时区",
+    "type": "string",
+    "default": "Asia/Shanghai"
+  }
+}
+

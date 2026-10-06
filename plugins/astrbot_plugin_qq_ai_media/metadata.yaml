@@ -1,0 +1,10 @@
+name: astrbot_plugin_qq_ai_media
+display_name: QQ AI 图片能力
+short_desc: QQ 图片理解、AI 生图与本地图库随机发送。
+desc: 解析 OneBot 图片消息，路由 Vision 模型，并提供 /draw 生图和 /randompic 本地随机图片。
+version: 0.5.3
+author: local
+repo: https://github.com/example/qq-ai-bot
+astrbot_version: ">=4.28,<5"
+support_platforms:
+  - aiocqhttp

@@ -1,0 +1,14 @@
+{
+  "enabled": {
+    "description": "启用计算器与天气工具",
+    "type": "bool",
+    "default": true
+  },
+  "weather_timeout_seconds": {
+    "description": "天气 API 超时（秒）",
+    "type": "int",
+    "default": 12,
+    "slider": {"min": 5, "max": 30, "step": 1}
+  }
+}
+

@@ -1,0 +1,11 @@
+name: astrbot_plugin_qq_ai_core
+display_name: QQ AI 基础设施
+short_desc: 检查 PostgreSQL 与 Redis 基础设施状态。
+desc: 提供 QQ AI 超级机器人项目的基础连接池、生命周期管理和管理员健康检查命令。
+version: 0.1.0
+author: local
+repo: https://github.com/example/qq-ai-bot
+astrbot_version: ">=4.28,<5"
+support_platforms:
+  - aiocqhttp
+

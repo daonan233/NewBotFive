@@ -1,0 +1,49 @@
+{
+  "enabled": {
+    "description": "启用插件",
+    "type": "bool",
+    "default": true
+  },
+  "default_think_mode": {
+    "description": "默认思考模式",
+    "type": "string",
+    "options": ["off", "on"],
+    "labels": ["关闭", "开启"],
+    "default": "off"
+  },
+  "normal_model": {
+    "description": "普通模型 ID",
+    "type": "string",
+    "default": "",
+    "hint": "留空时读取环境变量 DEFAULT_MODEL。必须是当前 OpenAI Compatible Provider 可调用的模型 ID。"
+  },
+  "reasoning_model": {
+    "description": "推理模型 ID",
+    "type": "string",
+    "default": "",
+    "hint": "留空时读取 SMART_MODEL。应填写支持推理的模型 ID；与普通模型相同时不会产生实际切换。"
+  },
+  "fast_model": {
+    "description": "短问题快速模型 ID",
+    "type": "string",
+    "default": "",
+    "hint": "留空时读取 FAST_MODEL。仅在 /think auto 状态下参与规则路由。"
+  },
+  "coding_model": {
+    "description": "代码问题模型 ID",
+    "type": "string",
+    "default": "",
+    "hint": "留空时读取 CODING_MODEL。仅在 /think auto 状态下参与规则路由。"
+  },
+  "lottery_max_winners": {
+    "description": "单次最多中奖人数",
+    "type": "int",
+    "default": 10,
+    "slider": {"min": 1, "max": 20, "step": 1}
+  },
+  "lottery_admin_only_start": {
+    "description": "仅管理员可发起抽奖",
+    "type": "bool",
+    "default": false
+  }
+}
