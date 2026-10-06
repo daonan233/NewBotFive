@@ -357,7 +357,7 @@ IMAGE_RATE_LIMIT_PER_MINUTE=2
 在 `.env` 中填写宿主机图片目录。Windows 路径建议使用正斜杠：
 
 ```dotenv
-RANDOM_IMAGE_HOST_DIR=H:/个人/pixiv/r18
+RANDOM_IMAGE_HOST_DIR=D:/Pictures/bot-gallery
 ```
 
 项目使用同步脚本把图片导入 Docker 内部图库卷，AstrBot 和 NapCat 都以只读方式使用该卷。这样即使图片位于 U 盘或移动硬盘，也不依赖 Docker Desktop 直接挂载可移动磁盘。
@@ -369,7 +369,7 @@ RANDOM_IMAGE_HOST_DIR=H:/个人/pixiv/r18
 也可以临时指定其他来源目录：
 
 ```powershell
-.\scripts\sync-random-images.ps1 -SourceDir 'H:\个人\pixiv\r18'
+.\scripts\sync-random-images.ps1 -SourceDir 'D:\Pictures\bot-gallery'
 ```
 
 首次导入或本地目录新增、替换图片后重新运行同步脚本。同步采用合并/覆盖方式，不会删除 Docker 图库卷中已经存在但源目录后来删除的旧文件。
@@ -390,7 +390,7 @@ RANDOM_IMAGE_HOST_DIR=H:/个人/pixiv/r18
 | `local_random_dir` | 容器内图库路径，通常无需修改 |
 | `local_random_recursive` | 是否扫描子文件夹 |
 
-不要在 WebUI 中填写 `H:\个人\pixiv\r18`；WebUI 使用容器内路径，Windows 宿主机路径只填写在 `.env` 的 `RANDOM_IMAGE_HOST_DIR`。图库卷内路径固定为 `/AstrBot/data/qq_ai_random_images`。
+不要在 WebUI 中填写 `D:\Pictures\bot-gallery`；WebUI 使用容器内路径，Windows 宿主机路径只填写在 `.env` 的 `RANDOM_IMAGE_HOST_DIR`。图库卷内路径固定为 `/AstrBot/data/qq_ai_random_images`。
 
 ### 通用 Agent 工具
 
